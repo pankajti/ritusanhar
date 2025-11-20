@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8s-demo-service
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: k8s-demo-service
+  template:
+    metadata:
+      labels:
+        app: k8s-demo-service
+    spec:
+      containers:
+        - name: k8s-demo-service
+          image: k8s-demo-service:1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /hello
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /hello
+              port: 8080
+            initialDelaySeconds: 15
+            periodSeconds: 10
