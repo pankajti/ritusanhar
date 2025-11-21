@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kafka-producer-service
+spec:
+  type: NodePort
+  selector:
+    app: kafka-producer-service
+  ports:
+    - port: 8082
+      nodePort: 30082
